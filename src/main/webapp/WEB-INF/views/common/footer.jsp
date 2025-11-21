@@ -1,11 +1,11 @@
 <%--
   Created by IntelliJ IDEA.
-  User: alsgh
+  User: tidto
   Date: 25. 11. 19.
   Time: 오후 4:46
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 <head>
     <title>Footer</title>
@@ -21,15 +21,15 @@
 
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assats/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assats/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assats/css/slicknav.min.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assats/css/owl.carousel.min.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assats/css/magnific-popup.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assats/css/animate.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/slicknav.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/owl.carousel.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/magnific-popup.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/animate.css"/>
 
     <!-- Main Stylesheets -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assats/css/style.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css"/>
 
 
     <!--[if lt IE 9]>
@@ -41,18 +41,18 @@
 <footer class="footer-section">
     <div class="container">
         <div class="footer-left-pic">
-            <img src="img/footer-left-pic.png" alt="">
+            <img src="${pageContext.request.contextPath}/assest/img/footer-left-pic.png" alt="">
         </div>
         <div class="footer-right-pic">
-            <img src="img/footer-right-pic.png" alt="">
+            <img src="${pageContext.request.contextPath}/assets/img/footer-right-pic.png" alt="">
         </div>
         <a href="#" class="footer-logo">
-            <img src="./img/logo.png" alt="">
+            <img src="${pageContext.request.contextPath}/assest/img/logo.png" alt="">
         </a>
         <ul class="main-menu footer-menu">
-            <li><a href="">Home</a></li>
-            <li><a href="">Games</a></li>
-            <li><a href="">Reviews</a></li>
+            <li><a href="home.do">Home</a></li>
+            <li><a href="gameList.do">Games</a></li>
+            <li><a href="bill.do">bill</a></li>
             <li><a href="">News</a></li>
             <li><a href="">Contact</a></li>
         </ul>
@@ -63,19 +63,19 @@
             <a href="#"><i class="fa fa-dribbble"></i></a>
             <a href="#"><i class="fa fa-behance"></i></a>
         </div>
-        <div class="copyright"><a href="">Colorlib</a> 2018 @ All rights reserved</div>
+        <div class="copyright"><a href="">tidto</a> 2025 @ All rights reserved</div>
     </div>
 </footer>
 <!-- Footer section end -->
 
 <!--====== Javascripts & Jquery ======-->
-<script src="${pageContext.request.contextPath}/assats/js/jquery-3.2.1.min.js"></script>
-<script src="${pageContext.request.contextPath}/assats/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/assats/js/jquery.slicknav.min.js"></script>
-<script src="${pageContext.request.contextPath}/assats/js/owl.carousel.min.js"></script>
-<script src="${pageContext.request.contextPath}/assats/js/jquery.sticky-sidebar.min.js"></script>
-<script src="${pageContext.request.contextPath}/assats/js/jquery.magnific-popup.min.js"></script>
-<script src="${pageContext.request.contextPath}/assats/js/main.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/jquery-3.2.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/jquery.slicknav.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/owl.carousel.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/jquery.sticky-sidebar.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/jquery.magnific-popup.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
 
 </body>
 </html>

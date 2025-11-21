@@ -5,8 +5,7 @@
   Time: AM 11:11
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -24,15 +23,15 @@
 
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assats/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assats/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assats/css/slicknav.min.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assats/css/owl.carousel.min.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assats/css/magnific-popup.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assats/css/animate.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/slicknav.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/owl.carousel.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/magnific-popup.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/animate.css"/>
 
     <!-- Main Stylesheets -->
-    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css"/>
 
 
     <!--[if lt IE 9]>
@@ -52,7 +51,7 @@
 <!-- Header section end -->
 
 <!-- Hero section -->
-<jsp:include page="${contentPage}">
+<jsp:include page="${contentPage}" />
 
 <!-- Footer section -->
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
@@ -61,13 +60,13 @@
 
 
 <!--====== Javascripts & Jquery ======-->
-<script src="${pageContext.request.contextPath}/assats/js/jquery-3.2.1.min.js"></script>
-<script src="${pageContext.request.contextPath}/assats/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/assats/js/jquery.slicknav.min.js"></script>
-<script src="${pageContext.request.contextPath}/assats/js/owl.carousel.min.js"></script>
-<script src="${pageContext.request.contextPath}/assats/js/jquery.sticky-sidebar.min.js"></script>
-<script src="${pageContext.request.contextPath}/assats/js/jquery.magnific-popup.min.js"></script>
-<script src="${pageContext.request.contextPath}/assats/js/main.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/jquery-3.2.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/jquery.slicknav.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/owl.carousel.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/jquery.sticky-sidebar.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/jquery.magnific-popup.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
 
 </body>
 </html>

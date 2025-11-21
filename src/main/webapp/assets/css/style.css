@@ -323,7 +323,7 @@ ol {
 
 .header-bar-warp {
 	background: #081624;
-	padding: 39px 40px 0;
+	padding: 20px 40px 0;
 	-webkit-box-shadow: 0 0 9px 3px rgba(226, 30, 228, 0.24);
 	box-shadow: 0 0 9px 3px rgba(226, 30, 228, 0.24);
 }
@@ -351,7 +351,7 @@ ol {
 .main-menu {
 	list-style: none;
 	text-align: center;
-	padding-top: 3px;
+	padding-top: 20px;
 }
 
 .main-menu li {
@@ -1568,7 +1568,7 @@ ol {
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
 	.header-bar-warp {
-		padding: 39px 15px 0;
+		padding: 20px 15px 0;
 	}
 	.main-menu li a {
 		margin-right: 10px;
@@ -1633,7 +1633,7 @@ ol {
 
 @media only screen and (max-width: 767px) {
 	.header-bar-warp {
-		padding: 25px 20px 10px;
+		padding: 10px 10px 20px 10px;
 	}
 	.main-menu.primary-menu {
 		display: none;
