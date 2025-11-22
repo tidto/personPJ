@@ -93,9 +93,9 @@
                     <li>
                     	<c:choose>
                     		<c:when test="${sessionScope.loginState == true}">
-                    			<a href="${pageContext.request.contextPath}/bill.do">Bill</a>
+                    			<a href="${pageContext.request.contextPath}/game?action=billList">Bill</a>
 		                    	<ul class="sub-menu">
-		                            <li><a href="${pageContext.request.contextPath}/bill.do">My Bills</a></li>
+		                            <li><a href="${pageContext.request.contextPath}/game?action=billList">My Bills</a></li>
 		                        </ul>
                     		</c:when>
                     		<c:otherwise>
@@ -109,9 +109,9 @@
                     <li>
                     	<c:choose>
                     		<c:when test="${sessionScope.loginState == true}">
-                    			<a href="${pageContext.request.contextPath}/cart.do">Cart</a>
+                    			<a href="${pageContext.request.contextPath}/game?action=cartList">Cart</a>
 		                    	<ul class="sub-menu">
-		                            <li><a href="${pageContext.request.contextPath}/cart.do">in Cart</a></li>
+		                            <li><a href="${pageContext.request.contextPath}/game?action=cartList">in Cart</a></li>
 		                        </ul>
                     		</c:when>
                     		<c:otherwise>

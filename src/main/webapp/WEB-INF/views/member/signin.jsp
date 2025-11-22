@@ -26,25 +26,16 @@
             	<%-- Register form --%>            	
                 <form class="contact-form" action="${pageContext.request.contextPath}/member" method="post">
                     
-                    <%-- [수정 1] 아이디 입력: id 속성 추가 --%>
                     <input type="text" name="id" id="userId" placeholder="Create ID" required>
-                    
-                    <%-- [수정 2] 중복 확인 메시지 영역 (디자인 영향 최소화) --%>
                     <div id="idCheckMsg" style="margin-top: -20px; margin-bottom: 20px; font-size: 14px; font-weight: bold; min-height: 20px;"></div>
-                    
-                    <%-- 비밀번호 입력 --%>
                     <input type="password"  name="password" placeholder="Create PASSWORD" required>
-                    
-                    <%-- 이름(닉네임) 입력 --%>
                     <input type="text"      name="name"     placeholder="Your Nickname" required>
-                    
                     <input type="hidden" 	name="action" 	value="join">
-                    
-                    <%-- [수정 3] 버튼: id 추가 및 초기 비활성화(disabled) --%>
                     <button type="submit" id="submitBtn" class="site-btn" disabled>
                         SIGN-UP
                         <img src="${pageContext.request.contextPath}/assets/img/icons/double-arrow.png" alt="#"/>
                     </button>
+                    
                 </form>
             </div>
             

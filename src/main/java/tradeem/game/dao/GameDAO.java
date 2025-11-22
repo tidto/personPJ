@@ -125,7 +125,7 @@ public class GameDAO {
         return game;
     }
 
-    // [편의 기능] ResultSet에서 값 꺼내기 (중복 제거용)
+    // 중복 제거용 ResultSet에서 값 꺼내기 ()
     private Game setGameFromRs(ResultSet rs) throws Exception {
         Game game = new Game();
         game.setGameNo(rs.getInt("GAME_NO"));
@@ -139,4 +139,183 @@ public class GameDAO {
         return game;
     }
 
+     // main.jsp
+	 // 랜덤으로 게임 3개 
+	 public ArrayList<Game> selectRandomGameList() {
+     ArrayList<Game> list = new ArrayList<>();
+     Connection conn = null;
+     PreparedStatement pstmt = null;
+     ResultSet rs = null;
+     
+     // DBMS_RANDOM 사용 서브쿼리
+     String sql = "SELECT * "
+     			+ "FROM (SELECT * FROM GAME_PROD ORDER BY DBMS_RANDOM.VALUE) "
+     			+ "WHERE ROWNUM <= 3";
+
+     try {
+         conn = DBConnect.getConnection();
+         pstmt = conn.prepareStatement(sql);
+         rs = pstmt.executeQuery();
+
+         while (rs.next()) {
+             Game g = new Game();
+             g.setGameNo(rs.getInt("GAME_NO"));
+             g.setGameNm(rs.getString("GAME_NM"));
+             g.setGameContent(rs.getString("GAME_CONTENT"));
+             g.setRelDate(rs.getDate("REL_DATE"));
+             g.setGenre(rs.getString("GENRE"));
+             // 필요한 필드 추가 set...
+             list.add(g);
+         }
+     } catch (Exception e) {
+         e.printStackTrace();
+     } finally {
+    	 DBConnect.close(conn, pstmt, rs);
+     }
+     return list;
+ }
+	 
+	 // home.jsp
+	 // 최신 게임 3개
+	 public ArrayList<Game> selectLatestGameList() {
+		 ArrayList<Game> list = new ArrayList<>();
+		 Connection conn = null;
+		 PreparedStatement pstmt = null;
+		 ResultSet rs = null;
+		
+		 // 발매일(REL_DATE) 내림차순 정렬 후 상위 3개
+		 String sql = "SELECT * "
+		 			+ "FROM (SELECT * FROM GAME_PROD ORDER BY REL_DATE DESC) "
+		 			+ "WHERE ROWNUM <= 3";
+		
+		 try {
+		     conn = DBConnect.getConnection();
+		     pstmt = conn.prepareStatement(sql);
+		     rs = pstmt.executeQuery();
+		
+		     while (rs.next()) {
+		         Game g = new Game();
+		         g.setGameNo(rs.getInt("GAME_NO"));
+		         g.setGameNm(rs.getString("GAME_NM"));
+		         g.setGameContent(rs.getString("GAME_CONTENT"));
+		         g.setRelDate(rs.getDate("REL_DATE"));
+		         g.setGenre(rs.getString("GENRE"));
+		         list.add(g);
+		     }
+		 } catch (Exception e) {
+		     e.printStackTrace();
+		 } finally {
+			 DBConnect.close(conn, pstmt, rs);
+		 }
+		     return list;
+	 }
+	 
+	 // admin author
+	 // 등록
+	 public int insertGame(Game g) {
+	    int resultKey = 0;
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    
+	    try {
+	        conn = DBConnect.getConnection();
+	        
+	        // SQL: PK(GAME_NO)를 반환받기 위한 쿼리 구조
+	        String[] returnCols = {"GAME_NO"};
+	        
+	        String sql = "INSERT INTO GAME_PROD "
+	                   + "(GAME_NO, GAME_NM, GAME_CONTENT, COST_COIN, REL_DATE, GENRE, GENRE_NO, GAME_VIDEO) "
+	                   + "VALUES (gm_seq.NEXTVAL, ?, ?, ?, SYSDATE, ?, ?, ?)";
+	                   
+	        pstmt = conn.prepareStatement(sql, returnCols);
+	        
+	        pstmt.setString(1, g.getGameNm());
+	        pstmt.setString(2, g.getGameContent());
+	        pstmt.setInt(3, g.getCostCoin());
+	        pstmt.setString(4, g.getGenre());
+	        pstmt.setInt(5, g.getGenreNo());
+	        pstmt.setString(6, g.getGameVideo());
+	        
+	        pstmt.executeUpdate();
+	        
+	        // 생성된 키(GAME_NO) 가져오기
+	        rs = pstmt.getGeneratedKeys();
+	        if (rs.next()) {
+	            resultKey = rs.getInt(1);
+	        }
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	    	DBConnect.close(conn, pstmt, rs);
+	    }
+	    return resultKey; // 생성된 번호 리턴 (이미지 저장용)
+	}
+	
+	 
+	// 게임 삭제
+    public void deleteGame(int gameNo) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        
+        try {
+            conn = DBConnect.getConnection();
+            String sql = "DELETE FROM GAME_PROD WHERE GAME_NO = ?";
+            
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, gameNo);
+            
+            pstmt.executeUpdate();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pstmt != null) pstmt.close();
+                if (conn != null) conn.close();
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+    }
+
+    // 수정 
+    public void updateGame(Game g) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        
+        try {
+            conn = DBConnect.getConnection();
+            // 이미지 변경 여부는 Service에서 판단하거나 별도 메서드로 뺄 수 있음
+            // 여기서는 기본 정보 수정
+            String sql = "UPDATE GAME_PROD SET "
+                       + "GAME_NM = ?, "
+                       + "GAME_CONTENT = ?, "
+                       + "COST_COIN = ?, "
+                       + "GENRE_NO = ?, "
+                       + "GAME_VIDEO = ? "
+                       + "WHERE GAME_NO = ?";
+            
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, g.getGameNm());
+            pstmt.setString(2, g.getGameContent());
+            pstmt.setInt(3, g.getCostCoin());
+            pstmt.setInt(4, g.getGenreNo());
+            pstmt.setString(5, g.getGameVideo());
+            pstmt.setInt(6, g.getGameNo()); // WHERE 조건
+            
+            pstmt.executeUpdate();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pstmt != null) pstmt.close();
+                if (conn != null) conn.close();
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+    }
 }

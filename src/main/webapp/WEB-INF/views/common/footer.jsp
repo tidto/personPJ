@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <html>
 <head>
     <title>Footer</title>
@@ -51,9 +53,27 @@
         </a>
         <ul class="main-menu footer-menu">
             <li><a href="home.do">Home</a></li>
-            <li><a href="gameList.do">Games</a></li>
-            <li><a href="bill.do">bill</a></li>
-            <li><a href="">News</a></li>
+            <li><a href="${pageContext.request.contextPath}/game?action=gameList">Games</a></li>
+            <li>
+            	<c:choose>
+               		<c:when test="${sessionScope.loginState == true}">
+               			<a href="${pageContext.request.contextPath}/game?action=billList">Bill</a>
+               		</c:when>
+               		<c:otherwise>
+               			<a href="${pageContext.request.contextPath}/member?action=loginForm">Bill</a>
+               		</c:otherwise>
+               	</c:choose>
+            </li>
+            <li>
+				<c:choose>
+              		<c:when test="${sessionScope.loginState == true}">
+              			<a href="${pageContext.request.contextPath}/game?action=cartList">Cart</a>
+              		</c:when>
+              		<c:otherwise>
+              			<a href="${pageContext.request.contextPath}/game?action=cartList">Cart</a>
+              		</c:otherwise>
+               	</c:choose>
+			</li>
             <li><a href="">Contact</a></li>
         </ul>
         <div class="footer-social d-flex justify-content-center">

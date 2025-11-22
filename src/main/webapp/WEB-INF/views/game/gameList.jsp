@@ -38,7 +38,7 @@
                             </div>
                         </c:when>
                         
-                        <%-- 데이터 반복 출력 (c:forEach) --%>
+                        <%-- 게임 데이터 반복 출력 (c:forEach) --%>
                         <c:otherwise>
                             <c:forEach var="game" items="${gameList}">
                                 <div class="col-lg-4 col-md-6">
@@ -63,14 +63,13 @@
                     </c:choose>
                 </div>
                 
-                <!-- 하단 페이징 (Pagination) -->
+                <!-- 페이징 -->
                 <div class="site-pagination">
-                    <%-- [이전] 버튼: 현재 페이지가 1보다 클 때만 표시 --%>
                     <c:if test="${curPage > 1}">
                         <a href="${pageContext.request.contextPath}/game?action=gameList&page=${curPage - 1}&genre=${selectedGenre}">&lt;</a>
                     </c:if>
 
-                    <%-- 페이지 번호 반복 (1, 2, 3 ...) --%>
+                    <%-- 페이지 번호 --%>
                     <c:forEach var="i" begin="${startPage}" end="${endPage}">
                         <c:choose>
                             <c:when test="${i == curPage}">
@@ -82,13 +81,26 @@
                         </c:choose>
                     </c:forEach>
 
-                    <%-- [다음] 버튼: 현재 페이지가 전체 페이지보다 작을 때만 표시 --%>
+                    <%-- > 버튼: 현재 페이지가 전체 페이지보다 작을 때만 표시 --%>
                     <c:if test="${curPage < totalPage}">
                         <a href="${pageContext.request.contextPath}/game?action=gameList&page=${curPage + 1}&genre=${selectedGenre}">&gt;</a>
                     </c:if>
                 </div>
             </div>
-            
+            <%-- admin(member id) insert game info --%>
+	        <c:if test="${sessionScope.member.memberNm == 'admin'}">
+	            <div class="col-xl-3 col-lg-4 col-md-5 sidebar">
+				    <div id="stickySidebar">
+				            <div class="widget-item">
+				                <a href="${pageContext.request.contextPath}/game?action=registerForm" class="site-btn" style="width: 100%; text-align: center;">
+				                    + NEW GAME REGISTER</a>
+				            </div>
+				        <div class="widget-item">
+				            <h4 class="widget-title">Trending</h4>
+			            </div>
+				    </div>
+				</div>
+	        </c:if>
             <!-- 오른쪽: 사이드바 (장르 검색) -->
             <div class="col-xl-3 col-lg-4 col-md-5 sidebar game-page-sideber">
                 <div id="stickySidebar">

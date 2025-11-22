@@ -8,11 +8,16 @@
 package tradeem.home;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import tradeem.game.dto.Game;
+import tradeem.game.service.GameService;
 
 /**
  * Servlet implementation class HomeController
@@ -51,8 +56,18 @@ public class HomeController extends HttpServlet {
 		String viewPage 	= "/WEB-INF/views/home.jsp";
 		String contentPage 	= "/WEB-INF/views/common/main.jsp";
 		
+		// main 게임 정보 뿌리기
+		GameService gameService = GameService.getInstance();
+		
 		switch (command) {
+		
 			case "/home.do":
+				List<Game> randomList = gameService.getRandomGameList();
+	            List<Game> latestList = gameService.getLatestGameList();
+	            
+	            request.setAttribute("randomGames", randomList);
+	            request.setAttribute("latestGames", latestList);
+	            
 				contentPage = "/WEB-INF/views/common/main.jsp";
 				break;
 			case "/gameList.do":
@@ -62,7 +77,7 @@ public class HomeController extends HttpServlet {
 				contentPage = "/WEB-INF/views/cart/cart.jsp";
 				break;
 			case "/bill.do":
-				contentPage = "/WEB-INF/views/member/bill.jsp";
+				contentPage = "/WEB-INF/views/bill/bill.jsp";
 				break;
 			case "/login.do":
 				contentPage = "/WEB-INF/views/member/login.jsp";

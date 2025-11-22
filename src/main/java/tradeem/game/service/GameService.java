@@ -8,6 +8,11 @@
 package tradeem.game.service;
 
 import java.util.List;
+
+import tradeem.bill.dao.BillDAO;
+import tradeem.bill.dto.Bill;
+import tradeem.cart.dao.CartDAO;
+import tradeem.cart.dto.Cart;
 import tradeem.game.dao.GameDAO;
 import tradeem.game.dto.Game;
 
@@ -42,4 +47,57 @@ public class GameService {
     public Game getGameDetail(int gameNo) {
         return gameDao.getGameDetail(gameNo);
     }
+    
+    // home.jsp
+    // 랜덤 게임 리스트
+    public List<Game> getRandomGameList() {
+        return gameDao.selectRandomGameList();
+    }
+
+    // 최신 게임 리스트 
+    public List<Game> getLatestGameList() {
+        return gameDao.selectLatestGameList();
+    }
+    
+    // admin author
+    // 게임 추가
+    public int insertGame(Game g) {
+        return gameDao.insertGame(g);
+    }
+    // 삭제
+    public void deleteGame(int gameNo) {
+        gameDao.deleteGame(gameNo);
+    }
+
+    // 수정
+    public void updateGame(Game g) {
+        gameDao.updateGame(g);
+    }
+    
+    // cart
+    // 장바구니 추가
+    public void insertCart(String memberId, int gameNo) {
+        CartDAO.getInstance().insertCart(memberId, gameNo);
+    }
+
+    // 목록
+    public List<Cart> getCartList(String memberId) {
+        return CartDAO.getInstance().getCartList(memberId);
+    }
+
+    // 삭제
+    public void deleteCart(int cartNo) {
+        CartDAO.getInstance().deleteCart(cartNo);
+    }
+    
+    // bill
+	// 구매 처리
+	public boolean buyGames(String memberId, List<Game> games, int totalCost, int[] cartNos) {
+	    return BillDAO.getInstance().buyGames(memberId, games, totalCost, cartNos);
+	}
+	
+	// 구매 내역 조회
+	public List<Bill> getBillList(String memberId) {
+	    return BillDAO.getInstance().getBillList(memberId);
+	}
 }

@@ -117,32 +117,54 @@
                                 </li>
                             </ul>
                             
-                            <!-- 구매/장바구니 버튼 영역 -->
                             <div class="rating" style="text-align: center; margin-top: 20px;">
-                                <c:choose>
-                                    <c:when test="${sessionScope.loginState == true}">
-                                        <c:choose>
-                                            <%-- 구매 가능 --%>
-                                            <c:when test="${sessionScope.member.rdCoin >= game.costCoin}">
-                                                <button class="site-btn" style="width: 100%; margin-bottom: 10px;">BUY NOW</button>
-                                                <button class="site-btn" style="width: 100%; background: #4b4b4b;">ADD TO CART</button>
-                                            </c:when>
-                                            <%-- 잔액 부족 --%>
-                                            <c:otherwise>
-                                                <button class="site-btn" style="width: 100%; margin-bottom: 10px; opacity: 0.5; cursor: not-allowed;" disabled>BUY NOW</button>
-                                                <button class="site-btn" style="width: 100%; background: #4b4b4b;">ADD TO CART</button>
-                                                <div style="margin-top: 10px; font-size: 12px; color: #ff5555;">
-                                                    * 잔액이 부족합니다.
-                                                </div>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <a href="${pageContext.request.contextPath}/member?action=loginForm" class="site-btn" style="width: 100%;">LOGIN TO BUY</a>
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
-                            
+							    <c:choose>
+							        <%-- [1] 로그인 상태 확인 --%>
+							        <c:when test="${sessionScope.loginState == true}">
+							            <c:choose>
+							                <%-- [1-1] 관리자(admin)일 경우: 수정, 삭제 버튼 --%>
+							                <c:when test="${sessionScope.member.memberNm == 'admin'}">
+							                    <a href="${pageContext.request.contextPath}/game?action=updateForm&no=${game.gameNo}" class="site-btn btn-warning">
+							                        GAME MODIFY
+							                    </a>
+							                    <a href="javascript:void(0);" onclick="if(confirm('정말 삭제하시겠습니까?')){ location.href='${pageContext.request.contextPath}/game?action=delete&no=${game.gameNo}'; }" class="site-btn btn-danger" style="background-color: #d9534f;">
+							                        GAME DELETE
+							                    </a>
+							                </c:when>
+							
+							                <%-- [1-2] 일반 유저일 경우: 코인 잔액 확인 로직 시작 --%>
+							                <c:otherwise>
+							                    <c:choose>
+							                        <%-- [1-2-A] 잔액 충분 --%>
+							                        <c:when test="${sessionScope.member.rdCoin >= game.costCoin}">
+							                            <button class="site-btn" style="width: 100%; margin-bottom: 10px;"
+							                            	>BUY NOW</button>
+							                            <button class="site-btn" style="width: 100%; background: #4b4b4b;"
+							                            	onclick="location.href='${pageContext.request.contextPath}/game?action=addToCart&no=${game.gameNo}'">ADD TO CART</button>
+							                        </c:when>
+							                        
+							                        <%-- [1-2-B] 잔액 부족 --%>
+							                        <c:otherwise>
+							                            <button class="site-btn" style="width: 100%; margin-bottom: 10px; opacity: 0.5; cursor: not-allowed;" disabled
+							                            	onclick="location.href='${pageContext.request.contextPath}/game?action=buy&type=direct&no=${game.gameNo}'">BUY NOW</button>
+							                            <button class="site-btn" style="width: 100%; background: #4b4b4b;"
+							                            	onclick="location.href='${pageContext.request.contextPath}/game?action=addToCart&no=${game.gameNo}'">ADD TO CART</button>
+							                            <div style="margin-top: 10px; font-size: 12px; color: #ff5555;">
+							                                * 잔액이 부족합니다.
+							                            </div>
+							                        </c:otherwise>
+							                    </c:choose>
+							                    <%-- // 코인 확인 종료 --%>
+							                </c:otherwise>
+							            </c:choose>
+							        </c:when>
+							
+							        <%-- [2] 비로그인 상태 --%>
+							        <c:otherwise>
+							            <a href="${pageContext.request.contextPath}/member?action=loginForm" class="site-btn" style="width: 100%;">LOGIN TO BUY</a>
+							        </c:otherwise>
+							    </c:choose>
+							</div>
                         </div>
                     </div>
                 </div>

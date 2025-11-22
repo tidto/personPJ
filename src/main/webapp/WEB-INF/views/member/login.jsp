@@ -75,7 +75,6 @@
     </div>
 </section>
 <!-- Contact page end-->
-
 <script>
     window.onload = function() {
         var msg = "${msg}";

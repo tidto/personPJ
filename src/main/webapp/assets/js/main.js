@@ -7,8 +7,6 @@
 
 
 'use strict';
-
-
 $(window).on('load', function() {
 	/*------------------
 		Preloder
@@ -46,7 +44,7 @@ $(window).on('load', function() {
 		loop: true,
 		nav: true,
 		dots: true,
-		navText: ['', '<img src="img/icons/solid-right-arrow.png">'],
+		navText: ['', '<img src="assets/img/icons/solid-right-arrow.png">'],
 		mouseDrag: false,
 		animateOut: 'fadeOut',
 		animateIn: 'fadeIn',

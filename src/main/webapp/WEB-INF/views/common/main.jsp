@@ -7,6 +7,10 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+
 
 <section class="hero-section overflow-hidden">
     <div class="hero-slider owl-carousel">
@@ -15,7 +19,16 @@
             <div class="container">
                 <h2>Tradeem!</h2>
                 <p>Unlock Your Next Adventure. Instant Codes. Infinite Play.<br>Shall we go find the TREASURE?</p>
-                <a href="#" class="site-btn">Read More  <img src="${pageContext.request.contextPath}/assets/img/icons/double-arrow.png" alt="#"/></a>
+                 <c:choose>
+                	<c:when test="${sessionScope.loginState == true}">
+                		<a href="${pageContext.request.contextPath}/game?action=gameList" class="site-btn">Trade it!  
+                		<img src="${pageContext.request.contextPath}/assets/img/icons/double-arrow.png" alt="#"/></a>
+                	</c:when>
+                	<c:otherwise>
+                		<a href="${pageContext.request.contextPath}/member?action=loginForm" class="site-btn">With Us!  
+                		<img src="${pageContext.request.contextPath}/assets/img/icons/double-arrow.png" alt="#"/></a>
+                	</c:otherwise>
+                </c:choose>
             </div>
         </div>
         <div class="hero-item set-bg d-flex align-items-center justify-content-center text-center" 
@@ -23,7 +36,16 @@
             <div class="container">
                 <h2>Tradeem!</h2>
                 <p>Unlock Your Next Adventure. Instant Codes. Infinite Play.<br>Shall we go find the TREASURE?</p>
-                <a href="#" class="site-btn">Read More  <img src="${pageContext.request.contextPath}/assets/img/icons/double-arrow.png" alt="#"/></a>
+                <c:choose>
+                	<c:when test="${sessionScope.loginState == true}">
+                		<a href="${pageContext.request.contextPath}/game?action=gameList" class="site-btn">Trade it!  
+                		<img src="${pageContext.request.contextPath}/assets/img/icons/double-arrow.png" alt="#"/></a>
+                	</c:when>
+                	<c:otherwise>
+                		<a href="${pageContext.request.contextPath}/member?action=loginForm" class="site-btn">With Us!  
+                		<img src="${pageContext.request.contextPath}/assets/img/icons/double-arrow.png" alt="#"/></a>
+                	</c:otherwise>
+                </c:choose>
             </div>
         </div>
     </div>
@@ -31,30 +53,34 @@
 <section class="intro-section">
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
-                <div class="intro-text-box text-box text-white">
-                    <div class="top-meta">11.11.18  /  in <a href="">Games</a></div>
-                    <h3>The best online game is out now!</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
-                    <a href="#" class="read-more">Read More  <img src="${pageContext.request.contextPath}/assets/img/icons/double-arrow.png" alt="#"/></a>
+            <c:forEach var="game" items="${randomGames}">
+                <div class="col-md-4 thum-trigger" data-gameno="${game.gameNo}">
+                    <div class="intro-text-box text-box text-white">
+                        <div class="top-meta">
+                            <fmt:formatDate value="${game.relDate}" pattern="yyyy.MM.dd"/> / in <a href="">${game.genre}</a>
+                        </div>
+                        <h3>${game.gameNm}</h3>
+                        <p>
+                            <c:choose>
+                                <c:when test="${fn:length(game.gameContent) > 60}">
+                                    ${fn:substring(game.gameContent, 0, 60)}...
+                                </c:when>
+                                <c:otherwise>
+                                    ${game.gameContent}
+                                </c:otherwise>
+                            </c:choose>
+                        </p>
+                        <a href="${pageContext.request.contextPath}/game?action=gameDetail&no=${game.gameNo}" class="read-more" >
+                        	Read More <img src="${pageContext.request.contextPath}/assets/img/icons/double-arrow.png" alt="#"/>
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="intro-text-box text-box text-white">
-                    <div class="top-meta">11.11.18  /  in <a href="">Playstation</a></div>
-                    <h3>Top 5 best games in november</h3>
-                    <p>Ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod...</p>
-                    <a href="#" class="read-more">Read More  <img src="${pageContext.request.contextPath}/assets/img/icons/double-arrow.png" alt="#"/></a>
+            </c:forEach>
+            <c:if test="${empty randomGames}">
+                <div class="col-12 text-white text-center">
+                    <p>추천 게임을 불러올 수 없습니다.</p>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="intro-text-box text-box text-white">
-                    <div class="top-meta">11.11.18  /  in <a href="">Reviews</a></div>
-                    <h3>Get this game at a promo price</h3>
-                    <p>Sit amet, consectetur adipiscing elit, sed do eiusmod tempor...</p>
-                    <a href="#" class="read-more">Read More  <img src="${pageContext.request.contextPath}/assets/img/icons/double-arrow.png" alt="#"/></a>
-                </div>
-            </div>
+            </c:if>
         </div>
     </div>
 </section>
@@ -63,50 +89,38 @@
         <div class="row">
             <div class="col-xl-9 col-lg-8 col-md-7">
                 <div class="section-title text-white">
-                    <h2>Latest News</h2>
+                    <h2>Latest Games</h2>
                 </div>
-                <ul class="blog-filter">
-                    <li><a href="#">Racing</a></li>
-                    <li><a href="#">Shooters</a></li>
-                    <li><a href="#">Strategy</a></li>
-                    <li><a href="#">Online</a></li>
-                </ul>
-                
-                <div class="blog-item">
-                    <div class="blog-thumb">
-                        <img src="${pageContext.request.contextPath}/assets/img/blog/1.jpg" alt="">
+
+                <c:forEach var="game" items="${latestGames}" varStatus="status">
+                    <div class="blog-item">
+                        <div class="blog-thumb">
+                            <img src="${pageContext.request.contextPath}/assets/img/games/${game.gameNo}.png" alt="">
+                        </div>
+                        <div class="blog-text text-box text-white">
+                            <div class="top-meta">
+                                <fmt:formatDate value="${game.relDate}" pattern="yyyy.MM.dd"/> / in <a href="">${game.genre}</a>
+                            </div>
+                            <h3>${game.gameNm}</h3>
+                            <p>
+                                <c:choose>
+                                    <c:when test="${fn:length(game.gameContent) > 100}">
+                                        ${fn:substring(game.gameContent, 0, 100)}...
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${game.gameContent}
+                                    </c:otherwise>
+                                </c:choose>
+                            </p>
+                            <a href="${pageContext.request.contextPath}/game?action=gameDetail&no=${game.gameNo}" class="read-more">Read More <img src="${pageContext.request.contextPath}/assets/img/icons/double-arrow.png" alt="#"/></a>
+                        </div>
                     </div>
-                    <div class="blog-text text-box text-white">
-                        <div class="top-meta">11.11.18  /  in <a href="">Games</a></div>
-                        <h3>The best online game is out now!</h3>
-                        <p>Lorem ipsum dolor sit amet...</p>
-                        <a href="#" class="read-more">Read More  <img src="${pageContext.request.contextPath}/assets/img/icons/double-arrow.png" alt="#"/></a>
-                    </div>
-                </div>
-                <div class="blog-item">
-                    <div class="blog-thumb">
-                        <img src="${pageContext.request.contextPath}/assets/img/blog/2.jpg" alt="">
-                    </div>
-                    <div class="blog-text text-box text-white">
-                         <div class="top-meta">11.11.18  /  in <a href="">Games</a></div>
-                        <h3>The best online game is out now!</h3>
-                        <p>Lorem ipsum dolor sit amet...</p>
-                        <a href="#" class="read-more">Read More  <img src="${pageContext.request.contextPath}/assets/img/icons/double-arrow.png" alt="#"/></a>
-                    </div>
-                </div>
-                <div class="blog-item">
-                    <div class="blog-thumb">
-                        <img src="${pageContext.request.contextPath}/assets/img/blog/3.jpg" alt="">
-                    </div>
-                    <div class="blog-text text-box text-white">
-                         <div class="top-meta">11.11.18  /  in <a href="">Games</a></div>
-                        <h3>The best online game is out now!</h3>
-                        <p>Lorem ipsum dolor sit amet...</p>
-                        <a href="#" class="read-more">Read More  <img src="${pageContext.request.contextPath}/assets/img/icons/double-arrow.png" alt="#"/></a>
-                    </div>
-                </div>
+                </c:forEach>
+                 <c:if test="${empty latestGames}">
+                    <div class="text-white">최신 게임 정보가 없습니다.</div>
+                 </c:if>
             </div>
-            
+
             <div class="col-xl-3 col-lg-4 col-md-5 sidebar">
                 <div id="stickySidebar">
                     <div class="widget-item">
@@ -117,11 +131,11 @@
                                     <img src="${pageContext.request.contextPath}/assets/img/blog-widget/1.jpg" alt="#">
                                 </div>
                                 <div class="tw-text">
-                                    <div class="tw-meta">11.11.18  /  in <a href="">Games</a></div>
+                                    <div class="tw-meta">11.11.18 / in <a href="">Games</a></div>
                                     <h5>The best online game is out now!</h5>
                                 </div>
                             </div>
-                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -160,3 +174,63 @@
         </form>
     </div>
 </section>
+<style>
+    #preview-box {
+        position: absolute;
+        display: none;    
+        z-index: 9999;     
+        border: 2px solid #fff;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        background: #000;
+        width: 150px;      
+        pointer-events: none; 
+    }
+    #preview-box img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+</style>
+	<div id="preview-box">
+		<img src="" alt="Game Preview">
+	</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // 1. 필요한 요소들 선택
+        const triggers = document.querySelectorAll('.thum-trigger');
+        const previewBox = document.getElementById('preview-box');
+        const previewImg = previewBox.querySelector('img');
+        
+        // 컨텍스트 경로 (JSP 변수를 JS 변수로 저장)
+        const contextPath = "${pageContext.request.contextPath}";
+
+        // 2. 모든 트리거(Read More 버튼)에 이벤트 연결
+        triggers.forEach(trigger => {
+            
+            // 마우스 들어올 때 (보여주기)
+            trigger.addEventListener('mouseenter', function() {
+                const gameNo = this.getAttribute('data-gameno'); // 저장해둔 번호 가져오기
+                
+                // 이미지 경로 설정 (assets/img/games/번호.png)
+                previewImg.src = contextPath + "/assets/img/games/" + gameNo + ".png";
+                
+                previewBox.style.display = 'block'; // 박스 보이기
+            });
+
+            // 마우스 움직일 때 (따라다니기)
+            trigger.addEventListener('mousemove', function(e) {
+                // 마우스 커서보다 조금 오른쪽 아래에 위치시킴 (15px, 15px)
+                // pageX, pageY는 문서 전체 기준 좌표
+                previewBox.style.left = (e.pageX + 15) + 'px';
+                previewBox.style.top = (e.pageY + 15) + 'px';
+            });
+
+            // 마우스 나갈 때 (숨기기)
+            trigger.addEventListener('mouseleave', function() {
+                previewBox.style.display = 'none';
+                previewImg.src = ""; // 이미지 초기화 (깜빡임 방지)
+            });
+        });
+    });
+</script>
