@@ -43,6 +43,7 @@ public class GameService {
         return (int) Math.ceil((double) count / PAGE_SIZE);
     }
     
+   
     // 게임 단건조회
     public Game getGameDetail(int gameNo) {
         return gameDao.getGameDetail(gameNo);

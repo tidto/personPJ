@@ -9,6 +9,49 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+    	.cart-section, .cart-table, .cart-total {
+        background: transparent !important;
+    }
+        .cart-table table, .cart-table th, .cart-table td {
+        border-color: rgba(255, 255, 255, 0.1) !important;
+    }
+    .price-col {
+        color: #e74c3c !important; 
+        font-size: 18px;
+        font-weight: 700;
+    }
+    .swal2-popup {
+        background: #1a1a1a !important; 
+        color: #ffffff !important;     
+        border: 1px solid #444;
+    }
+    .swal2-title {
+        color: #ffffff !important;
+    }
+    .swal-confirm-btn {
+        background-color: #2ecc71 !important; 
+    }
+    .swal-cancel-btn {
+        background-color: #e74c3c !important;
+    }
+    .calc-table {
+        width: 100%;
+        margin-top: 10px;
+        font-size: 16px;
+    }
+    .calc-table td {
+        padding: 5px;
+        text-align: left;
+    }
+    .calc-table td.vals {
+        text-align: right;
+        font-weight: bold;
+    }
+</style>
+
 <style>
     /* 장바구니 섹션 배경 투명화 및 글자색 흰색 고정 */
     .cart-section, .cart-table, .cart-total {
@@ -100,7 +143,7 @@
                         <button type="submit" id="checkoutBtn" class="site-btn" style="width: 100%; margin-top: 20px;">CHECKOUT</button>
                         
                         <div id="balanceMsg" style="display:none; margin-top: 15px; text-align: center;">
-                            <p style="color: #ff5555; font-size: 13px;">*  Lost, your RD Coin! </p>
+                            <p style="color: #ff5555; font-size: 13px;">* Not enough RD Coin! </p>
                             <button type="button" onclick="openCharge()" class="site-btn btn-sm" style="background: #2ecc71; width: 100%;">CHARGE COIN</button>
                         </div>
                     </div>
@@ -109,7 +152,6 @@
         </form>
     </div>
 </section>
-
 <script>
     function openCharge() {
         var width = 500; var height = 600;
@@ -125,6 +167,7 @@
         const totalPriceEl = document.getElementById('totalPrice');
         const checkoutBtn = document.getElementById('checkoutBtn');
         const balanceMsg = document.getElementById('balanceMsg');
+        const cartForm = document.getElementById('cartForm');
         
         const myCoin = ${sessionScope.member.rdCoin};
 
@@ -141,7 +184,6 @@
 
             totalPriceEl.innerText = total;
 
-            // 버튼 상태 제어
             if(checkedCount === 0) {
                 checkoutBtn.disabled = true;
                 checkoutBtn.style.opacity = "0.5";
@@ -158,6 +200,7 @@
                 checkoutBtn.style.cursor = "pointer";
                 balanceMsg.style.display = 'none';
             }
+            return total;
         }
 
         if(checkAll) {
@@ -175,5 +218,64 @@
         });
 
         calcTotal();
+
+        // --- CHECKOUT 버튼 클릭 이벤트 ---
+        checkoutBtn.addEventListener('click', function(e) {
+            e.preventDefault(); 
+
+            let currentTotal = calcTotal();
+            let remaining = myCoin - currentTotal;
+
+            // 1. 구매 확인 질문 창
+            Swal.fire({
+                title: 'Confirm Purchase?',
+                html: `
+                    <p style="color:#aaa; font-size:14px; margin-bottom:10px;">Are you sure you want to checkout?</p>
+                    <table class="calc-table">
+                        <tr>
+                            <td>Current Coin</td>
+                            <td class="vals" style="color:#2ecc71">` + myCoin + ` C</td>
+                        </tr>
+                        <tr>
+                            <td>Total Cost</td>
+                            <td class="vals" style="color:#e74c3c">-` + currentTotal + ` C</td>
+                        </tr>
+                        <tr style="border-top: 1px solid #555;">
+                            <td style="padding-top:10px;">Balance After</td>
+                            <td class="vals" style="padding-top:10px; color:#fff; font-size:1.2em;">` + remaining + ` C</td>
+                        </tr>
+                    </table>
+                `,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Buy!',
+                cancelButtonText: 'Cancel',
+                customClass: {
+                    confirmButton: 'site-btn swal-confirm-btn',
+                    cancelButton: 'site-btn swal-cancel-btn',
+                    popup: 'swal2-popup'
+                },
+                buttonsStyling: false
+            }).then((result) => {
+                // 2. 'Yes'를 눌렀을 때 실행
+                if (result.isConfirmed) {
+                    
+                    // 성공 애니메이션 (체크 표시) 팝업 띄우기
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Your purchase is complete.',
+                        icon: 'success',           // 여기가 체크 애니메이션의 핵심입니다
+                        timer: 1500,               // 1.5초 동안 보여줌
+                        showConfirmButton: false,  // 확인 버튼 숨김 (자동으로 넘어가게)
+                        customClass: {
+                            popup: 'swal2-popup'   // 다크 테마 유지
+                        }
+                    }).then(() => {
+                        // 3. 1.5초 뒤에 실제로 폼 전송
+                        cartForm.submit(); 
+                    });
+                }
+            });
+        });
     });
 </script>

@@ -94,6 +94,7 @@ public class GameController extends HttpServlet {
 			// 마지막 페이지가 총 페이지보다 크면 안되므로 보정
 			if (endPage > totalPage)
 				endPage = totalPage;
+			
 
 			// JSP로 값 전달
 			request.setAttribute("gameList", list);
@@ -105,7 +106,7 @@ public class GameController extends HttpServlet {
 
 			contentPage = "/WEB-INF/views/game/gameList.jsp";
 			break;
-
+			
 		case "gameDetail":
 			int no = 0;
 			try {
@@ -243,7 +244,7 @@ public class GameController extends HttpServlet {
 				String memberId = ((Member) request.getSession().getAttribute("member")).getMemberId();
 				int gameNo = Integer.parseInt(request.getParameter("no"));
 
-				// 서비스 호출 (장바구니 추가)
+				// 장바구니 추가
 				service.insertCart(memberId, gameNo);
 
 				// 장바구니 목록으로 이동
@@ -311,6 +312,7 @@ public class GameController extends HttpServlet {
 					buyGames.add(g);
 					totalCost = g.getCostCoin();
 				}
+				
 				// B. 장바구니 구매 (체크박스 선택 구매)
 				else if ("cart".equals(type)) {
 					// 체크된 장바구니 번호들 (String 배열)
@@ -351,7 +353,7 @@ public class GameController extends HttpServlet {
 					// 결제 실패 시 (잔액 부족 등)
 					response.setContentType("text/html; charset=UTF-8");
 					response.getWriter().write(
-							"<script>alert('Purchase Failed. Please check your coin balance.'); history.back();</script>");
+							"<script>alert('Purchase Failed.'); history.back();</script>");
 					return;
 				}
 

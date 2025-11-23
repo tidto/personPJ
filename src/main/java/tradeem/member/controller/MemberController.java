@@ -122,6 +122,7 @@ public class MemberController extends HttpServlet {
                     }
                 }
                 break;
+                
             case "checkId":
                 String checkId = request.getParameter("id");
                 boolean isIdExist = memberService.isIdExist(checkId);

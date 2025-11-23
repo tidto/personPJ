@@ -94,7 +94,7 @@
 
                 <c:forEach var="game" items="${latestGames}" varStatus="status">
                     <div class="blog-item">
-                        <div class="blog-thumb">
+                        <div class="blog-thumb" style="width: 250px; length: 250px;">
                             <img src="${pageContext.request.contextPath}/assets/img/games/${game.gameNo}.png" alt="">
                         </div>
                         <div class="blog-text text-box text-white">

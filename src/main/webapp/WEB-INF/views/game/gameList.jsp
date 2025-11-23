@@ -2,14 +2,12 @@
   Created by IntelliJ IDEA.
   User: tidto
   Date: 2025. 11. 19.
-  Time: AM 9:10
+  Time: AM 09:10
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
-<!-- 상단 배너 섹션 -->
 <section class="page-top-section set-bg" data-setbg="${pageContext.request.contextPath}/assets/img/page-top-bg/1.jpg">
     <div class="page-info">
         <h2>Games</h2>
@@ -20,12 +18,10 @@
     </div>
 </section>
 
-<!-- 게임 리스트 섹션 -->
 <section class="games-section">
     <div class="container">
         <div class="row">
             
-            <!-- 왼쪽: 게임 목록 영역 (col-xl-7) -->
             <div class="col-xl-7 col-lg-8 col-md-7">
                 <div class="row">
                     <c:choose>
@@ -43,9 +39,11 @@
                             <c:forEach var="game" items="${gameList}">
                                 <div class="col-lg-4 col-md-6">
                                     <div class="game-item">
-                                        <%-- 이미지: 게임번호.jpg --%>
-<                                         <img src="${pageContext.request.contextPath}/assets/img/games/${game.gameNo}.png" 
-                                             alt="${game.gameNm}" >                                      
+                                        <%-- 이미지: 게임번호.png --%>
+                                        <img src="${pageContext.request.contextPath}/assets/img/games/${game.gameNo}.png" 
+                                             alt="${game.gameNm}"
+                                             onerror="this.src='${pageContext.request.contextPath}/assets/img/games/default.png'">                                      
+                                        
                                         <h5>${game.gameNm}</h5>
                                         
                                         <div style="color:#ffb320; font-size:14px; margin-bottom:10px;">
@@ -63,7 +61,6 @@
                     </c:choose>
                 </div>
                 
-                <!-- 페이징 -->
                 <div class="site-pagination">
                     <c:if test="${curPage > 1}">
                         <a href="${pageContext.request.contextPath}/game?action=gameList&page=${curPage - 1}&genre=${selectedGenre}">&lt;</a>
@@ -87,7 +84,8 @@
                     </c:if>
                 </div>
             </div>
-            <%-- admin(member id) insert game info --%>
+            
+            <%-- admin 권한일 때만 등록 버튼 표시 --%>
 	        <c:if test="${sessionScope.member.memberNm == 'admin'}">
 	            <div class="col-xl-3 col-lg-4 col-md-5 sidebar">
 				    <div id="stickySidebar">
@@ -101,7 +99,7 @@
 				    </div>
 				</div>
 	        </c:if>
-            <!-- 오른쪽: 사이드바 (장르 검색) -->
+            
             <div class="col-xl-3 col-lg-4 col-md-5 sidebar game-page-sideber">
                 <div id="stickySidebar">
                     <div class="widget-item">
