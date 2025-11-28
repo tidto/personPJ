@@ -164,7 +164,9 @@ public class GameDAO {
 		ResultSet rs = null;
 
 		// DBMS_RANDOM 사용 서브쿼리
-		String sql = "SELECT * " + "FROM (SELECT * FROM GAME_PROD ORDER BY DBMS_RANDOM.VALUE) " + "WHERE ROWNUM <= 3";
+		String sql = "SELECT * " 
+				+ "FROM (SELECT * FROM GAME_PROD ORDER BY DBMS_RANDOM.VALUE) " 
+				+ "WHERE ROWNUM <= 3";
 
 		try {
 			conn = DBConnect.getConnection();
@@ -198,7 +200,9 @@ public class GameDAO {
 		ResultSet rs = null;
 
 		// 발매일(REL_DATE) 내림차순 정렬 후 상위 3개
-		String sql = "SELECT * " + "FROM (SELECT * FROM GAME_PROD ORDER BY REL_DATE DESC) " + "WHERE ROWNUM <= 3";
+		String sql = "SELECT * " 
+				+ "FROM (SELECT * FROM GAME_PROD ORDER BY REL_DATE DESC) " 
+				+ "WHERE ROWNUM <= 3";
 
 		try {
 			conn = DBConnect.getConnection();

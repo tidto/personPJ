@@ -68,7 +68,6 @@ public class GameController extends HttpServlet {
 
 		switch (action) {
 		case "gameList":
-			// 1요청 파라미터 받기 (페이지 번호, 장르 번호)
 			int page = 1;
 			int genreNo = 0; // 0이면 전체보기
 			try {

@@ -197,39 +197,35 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // 1. 필요한 요소들 선택
-        const triggers = document.querySelectorAll('.thum-trigger');
+
+    	const triggers = document.querySelectorAll('.thum-trigger');
         const previewBox = document.getElementById('preview-box');
         const previewImg = previewBox.querySelector('img');
-        
-        // 컨텍스트 경로 (JSP 변수를 JS 변수로 저장)
         const contextPath = "${pageContext.request.contextPath}";
 
-        // 2. 모든 트리거(Read More 버튼)에 이벤트 연결
+        // foreach 내부 div
         triggers.forEach(trigger => {
             
-            // 마우스 들어올 때 (보여주기)
+            // on
             trigger.addEventListener('mouseenter', function() {
-                const gameNo = this.getAttribute('data-gameno'); // 저장해둔 번호 가져오기
+                const gameNo = this.getAttribute('data-gameno'); 
                 
-                // 이미지 경로 설정 (assets/img/games/번호.png)
                 previewImg.src = contextPath + "/assets/img/games/" + gameNo + ".png";
                 
-                previewBox.style.display = 'block'; // 박스 보이기
+                previewBox.style.display = 'block'; 
             });
 
-            // 마우스 움직일 때 (따라다니기)
+            // 따라다니기
             trigger.addEventListener('mousemove', function(e) {
-                // 마우스 커서보다 조금 오른쪽 아래에 위치시킴 (15px, 15px)
-                // pageX, pageY는 문서 전체 기준 좌표
+                // pageX, pageY는 문서 전체 기준 좌표 padding
                 previewBox.style.left = (e.pageX + 15) + 'px';
                 previewBox.style.top = (e.pageY + 15) + 'px';
             });
 
-            // 마우스 나갈 때 (숨기기)
+            // off
             trigger.addEventListener('mouseleave', function() {
                 previewBox.style.display = 'none';
-                previewImg.src = ""; // 이미지 초기화 (깜빡임 방지)
+                previewImg.src = ""; 
             });
         });
     });

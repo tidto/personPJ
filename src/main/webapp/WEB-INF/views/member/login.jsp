@@ -79,7 +79,7 @@
     window.onload = function() {
         var msg = "${msg}";
         
-        // 2. msg가 비어있지 않다면 (로그인 실패 시)
+        // msg가 비어있지 않다면 (로그인 실패 시)
         if(msg !== "") {
 
         	document.querySelector('input[name="id"]').focus();
@@ -89,7 +89,6 @@
             // 원래 텍스트 저장 ("LOG-IN")
             var originalText = titleElement.innerText;
             
-            //  
             titleElement.innerText = msg;
             titleElement.style.color = "#ff7f50 "; 
             titleElement.style.transition = "0.3s"; 

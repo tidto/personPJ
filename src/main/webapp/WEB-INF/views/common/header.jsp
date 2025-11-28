@@ -145,7 +145,7 @@
 <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
 <script>
     function openChargeWindow() {
-        var width = 600;
+        var width = 700;
         var height = 550;
         var left = (window.screen.width / 2) - (width / 2);
         var top = (window.screen.height / 2) - (height / 2);

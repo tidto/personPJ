@@ -19,10 +19,7 @@ public class BillDAO {
     private static BillDAO instance = new BillDAO();
     private BillDAO() {}
     public static BillDAO getInstance() { return instance; }
-
-    // ==========================================
-    // 1. 구매 트랜잭션 (핵심 로직)
-    // ==========================================
+    
     public boolean buyGames(String memberId, List<Game> games, int totalCost, int[] cartNos) {
         Connection conn = null;
         PreparedStatement pstmtUpdate = null; // 코인 차감용
@@ -35,9 +32,7 @@ public class BillDAO {
             conn = DBConnect.getConnection();
             conn.setAutoCommit(false); // ★ 트랜잭션 시작 (자동 커밋 끔)
 
-            // -----------------------------------------
-            // Step 1. 멤버 코인 차감
-            // -----------------------------------------
+            // 코인 차감
             String sqlUpdate = "UPDATE MEMBER SET RD_COIN = RD_COIN - ? WHERE MEMBER_ID = ? AND RD_COIN >= ?";
             pstmtUpdate = conn.prepareStatement(sqlUpdate);
             pstmtUpdate.setInt(1, totalCost);
@@ -49,11 +44,9 @@ public class BillDAO {
                 throw new Exception("잔액 부족 또는 회원 정보 오류"); // 강제로 예외 발생시켜서 catch로 보냄
             }
 
-            // -----------------------------------------
-            // Step 2. 영수증(Bill) 생성 (리딤코드 랜덤 생성)
-            // -----------------------------------------
+            // 영수증(Bill) 생성 (리딤코드 랜덤 생성)
             // 오라클 DBMS_RANDOM.STRING('X', 15) -> 영문대문자+숫자 15자리
-            String sqlInsert = "INSERT INTO GAME_BILL (REDEEM_CODE, MEMBER_ID, GAME_NO, purchase_DATE) "
+            String sqlInsert = "INSERT INTO GAME_BILL (REDEEM_CODE, MEMBER_ID, GAME_NO, PURCHASE_DATE) "
                              + "VALUES (DBMS_RANDOM.STRING('X', 15), ?, ?, SYSDATE)";
             pstmtInsert = conn.prepareStatement(sqlInsert);
 
@@ -64,9 +57,7 @@ public class BillDAO {
             }
             pstmtInsert.executeBatch();
 
-            // -----------------------------------------
-            // Step 3. 장바구니 비우기 (장바구니 구매일 경우에만)
-            // -----------------------------------------
+            // 장바구니 비우기 (장바구니 구매일 경우에만)
             if(cartNos != null && cartNos.length > 0) {
                 String sqlDelete = "DELETE FROM CART_IN WHERE CART_NO = ?";
                 pstmtDelete = conn.prepareStatement(sqlDelete);
@@ -80,7 +71,6 @@ public class BillDAO {
 
             // -----------------------------------------
             // 모든 단계 성공 시 커밋
-            // -----------------------------------------
             conn.commit();
             isSuccess = true;
 
@@ -99,9 +89,7 @@ public class BillDAO {
         return isSuccess;
     }
 
-    // ==========================================
-    // 2. 구매 내역 조회 (bill.jsp용)
-    // ==========================================
+    // 구매 내역 조회 (bill.jsp용)
     public List<Bill> getBillList(String memberId) {
         List<Bill> list = new ArrayList<>();
         Connection conn = null;

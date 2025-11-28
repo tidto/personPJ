@@ -57,7 +57,7 @@
                 <p>Register a new game product. The Image file will be automatically renamed to the Game ID.</p>
                 <ul>
                     <li>Make sure the content is accurate.</li>
-                    <li>Upload 16:9 ratio images for best display.</li>
+                    <li>Upload 4:4 ratio images for best display.</li>
                 </ul>
             </div>
         </div>
